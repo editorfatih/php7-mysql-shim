@@ -53,6 +53,14 @@ namespace {
                 $password = ini_get('mysqli.default_pw') ?: null;
             }
 
+            // copied from flashmob/php7-mysql-shim
+            $socket = '';
+            if (strpos($hostname, ':/') == 0) {
+                // it's a unix socket
+                $socket = $hostname;
+                $hostname = 'localhost';
+            }
+
             $hash = sha1($hostname . $username . $flags);
             /* persistent connections start with p: */
             if ($hostname{1} !== ':' && isset(\Dshafik\MySQL::$connections[$hash])) {
@@ -85,7 +93,7 @@ namespace {
                     $password,
                     '',
                     null,
-                    '',
+                    $socket,
                     $flags
                 );
 

@@ -53,9 +53,9 @@ namespace {
                 $password = ini_get('mysqli.default_pw') ?: null;
             }
 
-            // copied from flashmob/php7-mysql-shim
+            // inspired from flashmob/php7-mysql-shim
             $socket = '';
-            if (strpos($hostname, ':/') == 0) {
+            if (strpos($hostname, ':/') === 0) {
                 // it's a unix socket
                 $socket = $hostname;
                 $hostname = 'localhost';
